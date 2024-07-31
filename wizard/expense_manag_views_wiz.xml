@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--   View expense    -->
+        <record id="view_expense_management_wiz_form" model="ir.ui.view">
+            <field name="name">expense.management.wiz.form</field>
+            <field name="model">expense.management.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class="o_row">
+                        <field name="date" nolabel="1"  placeholder="Date"/>
+                        <field name="name" nolabel="1" placeholder="Libellé"/>
+                        <field name="category_id" nolabel="1" placeholder="Catégorie" widget="selection"/>
+                        <field name="partner_id" nolabel="1" placeholder="Partenaire"/>
+                        <field name="payment_journal_id" nolabel="1" placeholder="Journal" widget="selection"/>
+                        <field name="amount" nolabel="1" placeholder="Montant" />
+                        <field name="bank_statement_id" nolabel="1" placeholder="Relevé" domain="[('state', '!=','confirm')]" />
+                    </div>
+
+                    <footer>
+                        <button name="create_expense" string="Enregistrer" type="object" class="btn-primary"/>
+                        <button string="Annuler" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="expense_management_wizard_action" model="ir.actions.act_window">
+            <field name="name">Dépense</field>
+            <field name="res_model">expense.management.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+                id="menu_expense_management_wiz"
+                name="Enregistrer une dépense"
+                sequence="40"
+                action="expense_management_wizard_action"
+                parent="top_menu_depense"
+        />
+    </data>
+</odoo>
