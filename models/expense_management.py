@@ -3,6 +3,15 @@
 from odoo import models, fields, api
 from datetime import date
 
+
+class ExpenseJournal(models.Model):
+    _name = "expense.journal"
+
+    name = fields.Char("Libellé")
+    date = fields.Date("Date")
+    amount = fields.Float("Montant")
+
+
 class ExpenseCategory(models.Model):
     _name = "expense.category"
 

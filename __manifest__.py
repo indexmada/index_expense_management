@@ -10,8 +10,10 @@
     'license': "AGPL-3",
     'data': [
             'security/ir.model.access.csv',
+            'views/expense_journal_view.xml',
             'views/expense_management_views.xml',
             'wizard/expense_manag_views_wiz.xml',
+            'wizard/inherit_cash_box_out_wizard.xml',
     ],
     'auto_install': False,
     'installable': True,

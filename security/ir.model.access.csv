@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_expense_category,access_expense_category,model_expense_category,base.group_user,1,1,1,1
+access_expense_journal,access_expense_journal,model_expense_journal,base.group_user,1,1,1,1
 access_expense_management,access_expense_management,model_expense_management,base.group_user,1,1,1,1
 
