@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_pos_session_form_inherit" model="ir.ui.view">
+            <field name="name">pos.session.form.view.inherit</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="cash_control" position="after">
+                        <field name="expense_management" invisible="1"/>
+                    </field>
+                    <xpath expr="//button[@name='360']" position="before">
+                        <button 
+                            class="oe_stat_button" 
+                            name="save_expense" 
+                            type="object" 
+                            icon="fa-pencil-square-o" 
+                            attrs="{
+                                'invisible': [
+                                    '|', '|', ('cash_control', '=', False), 
+                                    ('state', 'not in', ['opened', 'closing_control']),
+                                    ('expense_management', '=', False)
+                                ]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Enregistrer</span>
+                                <span class="o_stat_text">Dépenses</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" name="get_all_expenses" type="object" icon="fa-bars" attrs="{'invisible': ['|', ('cash_control', '=', False), ('state', 'not in', ['opened', 'closing_control'])]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Total</span>
+                                <span class="o_stat_text">Dépenses</span>
+                            </div>
+                        </button>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

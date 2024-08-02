@@ -10,6 +10,10 @@ class ExpenseJournal(models.Model):
     name = fields.Char("Libellé")
     date = fields.Date("Date")
     amount = fields.Float("Montant")
+    category_id = fields.Many2one("expense.category", string='Catégorie')
+    pos_session_id = fields.Many2one("pos.session", string='Session')
+
+    expense_journal_id = fields.Many2one('expense.detail.wizard', string="Journal")
 
 
 class ExpenseCategory(models.Model):

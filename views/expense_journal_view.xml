@@ -7,9 +7,24 @@
             <field name="arch" type="xml">
                 <tree create="false" edit="false" import="false">
                     <field name="date"/>
+                    <field name="category_id"/>
                     <field name="name"/>
+                    <field name="pos_session_id"/>
                     <field name="amount" sum="Total"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_expense_journal_pivot">
+            <field name="name">expense.journal.pivot</field>
+            <field name="model">expense.journal</field>
+            <field name="arch" type="xml">
+                <pivot string="Journal Dépenses">
+                    <field name="category_id" type="row"/>
+                    <field name="name" invisible="1"/>
+                    <field name="date" interval="day" type="col"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
             </field>
         </record>
 
@@ -17,6 +32,7 @@
             <field name="name">Journal des dépenses</field>
             <field name="res_model">expense.journal</field>
             <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot</field>
             <field name="view_id" ref="view_expense_journal_tree"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
