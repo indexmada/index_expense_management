@@ -30,3 +30,6 @@ class InheritCashBox(CashBox):
         return super(InheritCashBox, self).run()
 
 
+class CashBoxOut(InheritCashBox):
+    _inherit = 'cash.box.out'
+
