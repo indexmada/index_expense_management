@@ -10,7 +10,7 @@
                     <field name="cash_control" position="after">
                         <field name="expense_management" invisible="1"/>
                     </field>
-                    <xpath expr="//button[@name='360']" position="before">
+                    <xpath expr="//sheet/div/button[1]" position="before">
                         <button 
                             class="oe_stat_button" 
                             name="save_expense" 
