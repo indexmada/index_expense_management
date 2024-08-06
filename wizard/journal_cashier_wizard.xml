@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- <act_window name="Journal caisee" id="act_journal_cashier"
+            res_model="journal.cashier.wizard"
+            view_mode="form" target="new"/> -->
+
+        <record id="view_journal_cashier_wizard_form" model="ir.ui.view">
+            <field name="name">journal.cashier.wizard</field>
+            <field name="model">journal.cashier.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <div class="oe_grey">
+                            <p>AYO</p>
+                        </div>
+                    </group>
+
+                    <footer>
+                        <button string="OK" class="btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_journal_cashier_wizard_form" model="ir.actions.act_window">
+            <field name="name">journal caisse</field>
+            <field name="res_model">journal.cashier.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_journal_cashier_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- <record id="action_journal_cashier_wizard_form" model="ir.actions.act_window">
+            <field name="name">journal caisse</field>
+            <field name="res_model">journal.cashier.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record> -->
+
+
+    </data>
+</odoo>
