@@ -8,7 +8,7 @@ from datetime import date
 class InheritCashBox(CashBox):
     _register = False
 
-    category_id = fields.Many2one("expense.category", required=True)
+    category_id = fields.Many2one("expense.category")
 
     @api.multi
     def run(self):

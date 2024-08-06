@@ -3,4 +3,3 @@ access_expense_category,access_expense_category,model_expense_category,base.grou
 access_expense_journal,access_expense_journal,model_expense_journal,base.group_user,1,1,1,1
 access_expense_management,access_expense_management,model_expense_management,base.group_user,1,1,1,1
 access_expense_detail_wizard,access_expense_detail_wizard,model_expense_detail_wizard,base.group_user,1,1,1,1
-

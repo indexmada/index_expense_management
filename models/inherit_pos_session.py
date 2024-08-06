@@ -11,6 +11,37 @@ class PosSession(models.Model):
     config_id = fields.Many2one('pos.config', string='POS Config')
     expense_management = fields.Boolean(compute='_compute_expense', string='Gestion des dépenses')
 
+    total_journal_expenses = fields.Monetary(
+        string='Total dépenses',
+        currency_field='currency_id',
+        readonly=True,
+        default=lambda self: self._get_total_value(),
+        help="Total de toutes les dépenses")
+    currency_id = fields.Many2one('res.currency', related='config_id.currency_id', string="Currency", readonly=False)
+
+    def _get_total_value(self):
+        expense_journal_id = self.env['expense.journal'].search([('pos_session_id', '=', self.id)])
+        expense_journal_lines_ids = []
+        total_expenses = 0
+        if expense_journal_id:
+            for journal in expense_journal_id:
+                values_dict = {
+                    'name' : journal.name,
+                    'date' : journal.date,
+                    'amount' : journal.amount,
+                    'category_id' : journal.category_id.id,
+                    'pos_session_id' : journal.pos_session_id.id,
+                }
+                expense_journal_lines_ids.append((values_dict))
+        if expense_journal_lines_ids:
+            total_expenses = sum(elem['amount'] for elem in expense_journal_lines_ids)
+        return total_expenses
+
+    @api.multi
+    def action_report_journal_cashier_button(self):
+        # here the body
+        pass
+
     @api.depends('config_id')
     def _compute_expense(self):
         for session in self:
