@@ -10,16 +10,37 @@ class PosSession(models.Model):
 
     config_id = fields.Many2one('pos.config', string='POS Config')
     expense_management = fields.Boolean(compute='_compute_expense', string='Gestion des dépenses')
-
+    total_input = fields.Monetary(
+        string='Total entrée',
+        currency_field='currency_id',
+        readonly=True,
+        default=lambda self: self._get_total_input_value(),
+        help="Total de toutes les entrées")
     total_journal_expenses = fields.Monetary(
         string='Total dépenses',
         currency_field='currency_id',
         readonly=True,
-        default=lambda self: self._get_total_value(),
+        default=lambda self: self._get_total_expense_value(),
         help="Total de toutes les dépenses")
     currency_id = fields.Many2one('res.currency', related='config_id.currency_id', string="Currency", readonly=False)
 
-    def _get_total_value(self):
+    def _get_total_input_value(self):
+        pos_order_id = self.env['pos.order'].search([('session_id', '=', self.id)])
+        pos_order_id_lines_ids = []
+        total_expenses = 0
+        if pos_order_id:
+            for order in pos_order_id:
+                values_dict = {
+                    'name' : order.name,
+                    'date' : order.date_order,
+                    'amount' : order.amount_total,
+                }
+                pos_order_id_lines_ids.append((values_dict))
+        if pos_order_id_lines_ids:
+            total_expenses = sum(elem['amount'] for elem in pos_order_id_lines_ids)
+        return total_expenses
+
+    def _get_total_expense_value(self):
         expense_journal_id = self.env['expense.journal'].search([('pos_session_id', '=', self.id)])
         expense_journal_lines_ids = []
         total_expenses = 0

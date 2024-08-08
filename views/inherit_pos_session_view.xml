@@ -11,7 +11,8 @@
                         <field name="expense_management" invisible="1"/>
                     </field>
 
-                    <xpath expr="//field[@name='cash_register_total_entry_encoding']" position="after">
+                    <xpath expr="//field[@name='cash_register_balance_start']" position="after">
+                        <field name="total_input" attrs="{'invisible': [('state', 'not in', ['opened', 'closing_control'])]}" class="oe_bold oe_pos_total"/>
                         <field name="total_journal_expenses" attrs="{'invisible': [('state', 'not in', ['opened', 'closing_control'])]}" class="oe_bold oe_pos_total"/>
                     </xpath>
 
@@ -19,7 +20,7 @@
                         <attribute name="attrs">{'invisible': [('state', 'not in', ['opened', 'closing_control'])]}</attribute>
                     </xpath>
                     <xpath expr="//sheet/div/button[1]" position="before">
-                        <button 
+                        <!-- <button 
                             class="oe_stat_button" 
                             name="save_expense" 
                             type="object" 
@@ -32,10 +33,10 @@
                                 <span class="o_stat_text">Enregistrer</span>
                                 <span class="o_stat_text">Dépenses</span>
                             </div>
-                        </button>
-                        <button class="oe_stat_button" name="get_all_expenses" type="object" icon="fa-bars" attrs="{'invisible': [('state', 'not in', ['opened', 'closing_control'])]}">
+                        </button> -->
+                        <button class="oe_stat_button" name="get_all_expenses" type="object" icon="fa-bars" attrs="{'invisible': ['|', ('cash_control', '=', False), ('state', 'not in', ['opened', 'closing_control'])]}">
                             <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">Total</span>
+                                <span class="o_stat_text">Détails des</span>
                                 <span class="o_stat_text">Dépenses</span>
                             </div>
                         </button>
