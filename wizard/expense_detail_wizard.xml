@@ -8,7 +8,7 @@
                 <form>
                     <group>
                         <field name="expense_journal_lines_ids" nolabel="1">
-                            <tree editable="false" create="false">
+                            <tree editable="false" create="false" delete="false">
                                 <field name="date"/>
                                 <field name="name"/>
                                 <field name="category_id"/>

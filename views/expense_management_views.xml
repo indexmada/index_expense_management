@@ -66,13 +66,12 @@
         </record>
 
         <menuitem
-                id="menu_category_expense"
-                name="Categorie Dépense"
-                sequence="30"
-                action="expense_category_action"
-                parent="point_of_sale.menu_point_config_product"
-                />
-
+            id="menu_category_expense"
+            name="Categorie Dépense"
+            sequence="30"
+            action="expense_category_action"
+            parent="point_of_sale.menu_point_config_product"
+            />
 
     </data>
 </odoo>

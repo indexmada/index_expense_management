@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- <act_window name="Journal caisee" id="act_journal_cashier"
+        <!-- <act_window name="Journal caisse" id="act_journal_cashier"
             res_model="journal.cashier.wizard"
             view_mode="form" target="new"/> -->
 
@@ -11,26 +11,64 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <div class="oe_grey">
-                            <p>AYO</p>
+                        <div>
+                            <group class="oe_left">
+                                <!-- <field name="name" class="oe_inline" readonly="1"/> -->
+                                <field name="date" class="oe_inline" readonly="1"/>
+                                <field name="journal_reference" class="oe_inline" readonly="1"/>
+                                <!-- <field name="initial_balance" class="oe_inline oe_right"/> -->
+                            </group>
                         </div>
+                        <div>
+                            <group class="oe_subtotal_footer oe_right">
+                                <label for="initial_balance" string="Solde initial" class="oe_force_bold oe_opening_total oe_right"/>
+                                <field name="initial_balance" nolabel="1" class="oe_bold oe_pos_total oe_right" readonly="1"/>
+                            </group>
+                        </div>
+                        <div class="oe_clear"/>
+                        <field name="journal_box_aggregate_ids" nolabel="1">
+                            <tree editable="false" create="false" delete="false">
+                                <field name="date"/>
+                                <field name="label"/>
+                                <field name="partner"/>
+                                <field name="reference"/>
+                                <field name="input"/>
+                                <field name="output"/>
+                                <field name="balance"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <label for="final_balance" string="Solde final" class="oe_force_bold oe_opening_total"/>
+                            <field name="final_balance" nolabel="1" class="oe_bold oe_pos_total" readonly="1"/>
+                            <!-- <field name="final_balance" class="oe_right"/> -->
+                        </group>
                     </group>
 
                     <footer>
-                        <button string="OK" class="btn-primary" special="cancel"/>
+                        <button name="print_journal_cashier" string="Imprimer" type="object" class="btn-primary"/>
+                        <button string="Annuler" class="btn-secondary" special="cancel"/>
                     </footer>
                 </form>
             </field>
         </record>
         
-        <record id="action_journal_cashier_wizard_form" model="ir.actions.act_window">
+        <!-- <record id="action_journal_cashier_wizard_form" model="ir.actions.act_window">
             <field name="name">journal caisse</field>
             <field name="res_model">journal.cashier.wizard</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_journal_cashier_wizard_form"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+
+        <!-- <act_window 
+            id="action_journal_cashier"
+            name="Journal de caisse"
+            res_model="journal.cashier.wizard"
+            src_model="pos.session"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/> -->
 
         <!-- <record id="action_journal_cashier_wizard_form" model="ir.actions.act_window">
             <field name="name">journal caisse</field>

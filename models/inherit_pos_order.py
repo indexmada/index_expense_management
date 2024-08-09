@@ -10,6 +10,7 @@ class PosOrder(models.Model):
 
     @api.model
     def create(self, values):
+        pos_order = super(PosOrder, self).create(values)
         if 'session_id' in values:
             pos_order_id = self.env['pos.order'].search([('session_id', '=', values.get('session_id'))])
             pos_order_id_lines_ids = []
@@ -25,4 +26,4 @@ class PosOrder(models.Model):
                 total_order = sum(elem['amount'] for elem in pos_order_id_lines_ids)
                 pos_session_id = self.env['pos.session'].search([('id', '=', values.get('session_id'))])
                 pos_session_id.write({'total_input' : total_order})
-        return super(PosOrder, self).create(values)
+        return pos_order

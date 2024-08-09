@@ -22,7 +22,7 @@
         'wizard/expense_manag_views_wiz.xml',
         'wizard/expense_detail_wizard.xml',
         'wizard/inherit_cash_box_out_wizard.xml',       
-        # 'wizard/journal_cashier_wizard.xml',       
+        'wizard/journal_cashier_wizard.xml',       
     ],
     'auto_install': False,
     'installable': True,

@@ -4,6 +4,19 @@ from odoo import models, fields, api
 from datetime import date
 
 
+class JournalBoxAggregate(models.Model):
+    _name = 'journal.box.aggregate'
+
+    date = fields.Date(string='Date')
+    label = fields.Char(string='Libellé')
+    partner = fields.Char(string='Partnenaire')
+    reference = fields.Char(string='Référence')
+    input = fields.Float(string='Entrée')
+    output = fields.Float(string='Sortie')
+    balance = fields.Float(string='Solde')
+    journal_cashier_wizard_id = fields.Many2one('journal.cashier.wizard', string='Journal caisse')
+
+
 class ExpenseJournal(models.Model):
     _name = "expense.journal"
 

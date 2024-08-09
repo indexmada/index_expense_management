@@ -2,13 +2,22 @@
 <odoo>
     <data>
         <!-- <report
-            string="Journal de caisee"
+            string="Journal de caisse"
             id="action_report_journal_cashier"
             model="pos.session"
             report_type="qweb-pdf"
             name="index_expense_management.report_jouranlCashier"
             file="index_expense_management.report_jouranlCashier"
-            print_report_name="'Journal de caisee - %s' % (object.name).replace('/','')"
+            print_report_name="'Journal de caisse - %s' % (object.name).replace('/','')"
         /> -->
+        <report
+            id="action_report_journal_cashier"
+            string="Journal de caisse"
+            model="journal.cashier.wizard"
+            report_type="qweb-pdf"
+            name="index_expense_management.report_jouranlCashier"
+            file="index_expense_management.report_jouranlCashier"
+            print_report_name="'Journal de caisse - %s' % (object.name).replace('/','')"
+        />
     </data>
 </odoo>

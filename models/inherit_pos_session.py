@@ -111,3 +111,66 @@ class PosSession(models.Model):
             # 'context': context,
             'target': 'new'
         }
+    
+    @api.model
+    def call_action_journal_caisse(self):
+        dict_context = dict(self._context)
+        active_model_pos_session = self.env['pos.session'].search([('id', '=', dict_context['active_id'])])
+        statement_lines = active_model_pos_session.statement_ids
+        journal_list = []
+        journal_dict_list = []
+        for state in statement_lines:
+            for line in state.line_ids:
+                dict_line = {
+                    'date' : line.date,
+                    'label' : line.name,
+                    'partner_name' : line.partner_id.name,
+                    'ref' : line.ref,
+                    'amount' : line.amount,
+                }
+                final_dict = {
+                    'date' : dict_line['date'],
+                    'label' : dict_line['label'],
+                    'partner' : dict_line['partner_name'],
+                    'reference'  : dict_line['ref'],
+                    'input' : 0.0,
+                    'output' : 0.0,
+                    'balance' : 0.0
+                }
+                if dict_line['amount'] < 0:
+                    final_dict['output'] = dict_line['amount'] * (-1)
+                elif dict_line['amount'] > 0:
+                    final_dict['input'] = dict_line['amount']
+                journal_dict_list.append(final_dict)
+                # journal_list.append((0, 0, final_dict))
+        dict_values = {
+            'name' : 'name_{}'.format(active_model_pos_session.cash_register_id.name),
+            'date' : fields.Date.today(),
+            'journal_reference' : active_model_pos_session.cash_register_id.name,
+            'initial_balance' : active_model_pos_session.cash_register_balance_start,
+            # 'final_balance' : active_model_pos_session.cash_register_balance_end_real,
+            # 'journal_box_aggregate_ids' : journal_list
+        }
+        if journal_dict_list:
+            journal_dict_list[0]['balance'] = active_model_pos_session.cash_register_balance_start + journal_dict_list[0]['input'] - journal_dict_list[0]['output']
+            for i in range(1, len(journal_dict_list)):
+                previous_elem = journal_dict_list[i - 1]
+                journal_dict_list[i]['balance'] = previous_elem['balance'] + journal_dict_list[i]['input'] - journal_dict_list[i]['output']
+            for journal in journal_dict_list:
+                journal_list.append((0, 0, journal))
+            dict_values['final_balance'] = journal_dict_list[-1]['balance']
+            dict_values['journal_box_aggregate_ids'] = journal_list
+
+        wizard = self.env['journal.cashier.wizard'].create(dict_values)
+        context = {}
+        return {
+            'name': 'Journal caisses',
+            # 'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'journal.cashier.wizard',
+            'res_id': wizard.id,
+            # 'view_id': self.env.ref('index_expense_management.view_journal_cashier_wizard_form').id,
+            'type': 'ir.actions.act_window',
+            'context': context,
+            'target': 'new'
+        }

@@ -23,7 +23,6 @@ class InheritCashBox(CashBox):
                 'amount' : self.amount
             }
             active_sessions = self.env[active_model].browse(active_ids)
-            logging.error('___________________active_sessions___{}__________'.format(active_sessions))
             if active_sessions:
                 values['pos_session_id'] = active_sessions.id
             self.env['expense.journal'].create(values)

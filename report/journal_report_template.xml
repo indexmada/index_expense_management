@@ -3,14 +3,46 @@
 
     <template id="report_jouranl_cashier">
         <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-                <div class="page">
-                    <h2>
-                        ALLO
-                    </h2>
-                </div>
-            </t>
-         </t>
+            <!-- <t t-call="web.external_layout"> -->
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <h1 style="text-align: center;">Journal caisse du <t t-esc="doc.date"/></h1>
+                        <!-- <p><strong>Date du journal</strong> : <t t-esc="doc.date"/></p>
+                        <p><strong>Référence du journal</strong> : <t t-esc="doc.journal_reference"/></p> -->
+                        <div style="margin-bottom: 20px; text-align: right; font-size: 18px;"><strong>Solde initial</strong> : <t t-esc="doc.initial_balance"/></div>
+                        
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Date</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Libellé</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Partenaire</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Référence</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Entrée</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Sortie</th>
+                                    <th style="background-color: #f2f2f2; text-align: left; padding: 8px;">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.journal_box_aggregate_ids" t-as="line">
+                                    <tr>
+                                        <td style="padding: 8px;"><t t-esc="line.date"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.label"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.partner"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.reference"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.input"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.output"/></td>
+                                        <td style="padding: 8px;"><t t-esc="line.balance"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        
+                        <div style="margin-top: 20px; text-align: right; font-size: 18px;"><strong>Solde final</strong> : <t t-esc="doc.final_balance"/></div>
+                    </div>
+                </t>
+            <!-- </t> -->
+        </t>
     </template>
 
     <template id="report_jouranlCashier">

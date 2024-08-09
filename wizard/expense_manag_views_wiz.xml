@@ -34,11 +34,11 @@
         </record>
 
         <menuitem
-                id="menu_expense_management_wiz"
-                name="Enregistrer une dépense"
-                sequence="40"
-                action="expense_management_wizard_action"
-                parent="top_menu_depense"
+            id="menu_expense_management_wiz"
+            name="Enregistrer une dépense"
+            sequence="40"
+            action="expense_management_wizard_action"
+            parent="top_menu_depense"
         />
     </data>
 </odoo>
