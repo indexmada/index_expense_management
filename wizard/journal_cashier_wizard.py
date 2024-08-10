@@ -11,9 +11,11 @@ class JournalCashierWizard(models.Model):
 
     name = fields.Char(string='Nom')
     date = fields.Date(string='Date du journal')
+    # pos_session_id = fields.Many2one('pos.session', readonly=True)
+    currency_id = fields.Many2one('res.currency', readonly=True)
     journal_reference = fields.Char(string='Référence du journal')
-    initial_balance = fields.Float(string='Solde initial')
-    final_balance = fields.Float(string='Solde final')
+    initial_balance = fields.Monetary(digits=2, string='Solde initial')
+    final_balance = fields.Monetary(dgits=2, string='Solde final')
     journal_box_aggregate_ids = fields.One2many('journal.box.aggregate', 'journal_cashier_wizard_id', string='Lignes journal caisse')
 
     @api.multi

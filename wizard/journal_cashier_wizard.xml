@@ -16,13 +16,15 @@
                                 <!-- <field name="name" class="oe_inline" readonly="1"/> -->
                                 <field name="date" class="oe_inline" readonly="1"/>
                                 <field name="journal_reference" class="oe_inline" readonly="1"/>
+                                <field name="currency_id" class="oe_inline" />
                                 <!-- <field name="initial_balance" class="oe_inline oe_right"/> -->
                             </group>
                         </div>
                         <div>
                             <group class="oe_subtotal_footer oe_right">
-                                <label for="initial_balance" string="Solde initial" class="oe_force_bold oe_opening_total oe_right"/>
-                                <field name="initial_balance" nolabel="1" class="oe_bold oe_pos_total oe_right" readonly="1"/>
+                                <!-- <label for="initial_balance" string="Solde initial" class="oe_force_bold oe_opening_total oe_right"/> -->
+                                <!-- <field name="initial_balance" nolabel="1" class="oe_bold oe_pos_total oe_right" readonly="1"/> -->
+                                <field name="initial_balance" class="oe_bold oe_pos_total oe_right" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             </group>
                         </div>
                         <div class="oe_clear"/>
@@ -38,8 +40,9 @@
                             </tree>
                         </field>
                         <group class="oe_subtotal_footer oe_right">
-                            <label for="final_balance" string="Solde final" class="oe_force_bold oe_opening_total"/>
-                            <field name="final_balance" nolabel="1" class="oe_bold oe_pos_total" readonly="1"/>
+                            <!-- <label for="final_balance" string="Solde final" class="oe_force_bold oe_opening_total"/> -->
+                            <!-- <field name="final_balance" nolabel="1" class="oe_bold oe_pos_total" readonly="1"/> -->
+                            <field name="final_balance" class="oe_bold oe_pos_total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             <!-- <field name="final_balance" class="oe_right"/> -->
                         </group>
                     </group>

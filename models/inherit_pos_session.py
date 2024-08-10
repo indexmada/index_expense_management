@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 from math import copysign
 import logging
 
@@ -9,7 +10,7 @@ class PosSession(models.Model):
     _inherit = 'pos.session'
 
     config_id = fields.Many2one('pos.config', string='POS Config')
-    expense_management = fields.Boolean(compute='_compute_expense', string='Gestion des dépenses')
+    expense_management = fields.Boolean(compute='_compute_cash_all', string='Gestion des dépenses')
     total_input = fields.Monetary(
         string='Total entrée',
         currency_field='currency_id',
@@ -23,6 +24,34 @@ class PosSession(models.Model):
         default=lambda self: self._get_total_expense_value(),
         help="Total de toutes les dépenses")
     currency_id = fields.Many2one('res.currency', related='config_id.currency_id', string="Currency", readonly=False)
+
+    # @api.depends('config_id')
+    # def _compute_expense(self):
+    #     for session in self:
+    #         session.expense_management = False
+    #         if session.config_id.expense_management:
+    #             session.expense_management = True
+
+    @api.depends('config_id', 'statement_ids')
+    def _compute_cash_all(self):
+        for session in self:
+            super(PosSession, self)._compute_cash_all()
+            # session.cash_register_id = session.cash_journal_id = session.expense_management = False
+            session.expense_management = False
+            if session.config_id.expense_management:
+                for statement in session.statement_ids:
+                    if statement.journal_id.type == 'cash':
+                        session.expense_management = True
+                        # session.cash_journal_id = statement.journal_id.id
+                        # session.cash_register_id = statement.id
+                        self._cr.execute(
+                            """
+                            UPDATE pos_session 
+                            SET cash_register_id = %s, cash_journal_id = %s
+                            WHERE id = %s;
+                            """,
+                            (statement.id, statement.journal_id.id, session.id)
+                        )
 
     def _get_total_input_value(self):
         pos_order_id = self.env['pos.order'].search([('session_id', '=', self.id)])
@@ -63,12 +92,6 @@ class PosSession(models.Model):
         # here the body
         pass
 
-    @api.depends('config_id')
-    def _compute_expense(self):
-        for session in self:
-            session.expense_management = False
-            if session.config_id.expense_management:
-                session.expense_management = True
 
     def get_all_expenses(self):
         expense_journal_id = self.env['expense.journal'].search([('pos_session_id', '=', self.id)])
@@ -148,6 +171,7 @@ class PosSession(models.Model):
             'date' : fields.Date.today(),
             'journal_reference' : active_model_pos_session.cash_register_id.name,
             'initial_balance' : active_model_pos_session.cash_register_balance_start,
+            'currency_id' : active_model_pos_session.currency_id.id,
             # 'final_balance' : active_model_pos_session.cash_register_balance_end_real,
             # 'journal_box_aggregate_ids' : journal_list
         }
