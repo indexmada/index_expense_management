@@ -12,7 +12,7 @@ class JournalCashierWizard(models.Model):
     name = fields.Char(string='Nom')
     date = fields.Date(string='Date du journal')
     # pos_session_id = fields.Many2one('pos.session', readonly=True)
-    currency_id = fields.Many2one('res.currency', readonly=True)
+    currency_id = fields.Many2one('res.currency', string='Devise', readonly=True)
     journal_reference = fields.Char(string='Référence du journal')
     initial_balance = fields.Monetary(digits=2, string='Solde initial')
     final_balance = fields.Monetary(dgits=2, string='Solde final')
