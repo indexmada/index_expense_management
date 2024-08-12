@@ -213,7 +213,7 @@ class PosSession(models.Model):
                         raise UserError(_("Your ending balance is too different from the theoretical cash closing (%.2f), the maximum allowed is: %.2f. You can contact your manager to force it.") % (st.difference, st.journal_id.amount_authorized_diff))
                 if (st.journal_id.type not in ['bank', 'cash']):
                     raise UserError(_("The journal type for your payment method should be bank or cash."))
-                if not session.config_id.expense_management:
+                if session.config_id.cash_control:
                     st.with_context(ctx_notrack).sudo().button_confirm_bank()
         self.with_context(ctx)._confirm_orders()
         self.write({'state': 'closed'})
