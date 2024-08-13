@@ -4,6 +4,17 @@
         <field name="model">cash.box.out</field>
         <field name="inherit_id" ref="account.cash_box_out_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//group" position="replace">
+                <group>
+                    <group>
+                        <field name="name" class="oe_inline"/>
+                        <field name="amount" class="oe_inline"/>
+                    </group>
+                    <group>
+                        <field name="journal_id" class="oe_inline" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                    </group>
+                </group>
+            </xpath>
             <xpath expr="//field[@name='name']" position="before">
                 <field name="category_id" class="oe_inline" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
             </xpath>

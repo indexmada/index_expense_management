@@ -154,6 +154,7 @@ class PosSession(models.Model):
                 final_dict = {
                     'date' : dict_line['date'],
                     'label' : dict_line['label'],
+                    'payment_journal' : [(6, 0, active_model_pos_session.config_id.journal_ids.ids)],
                     'partner' : dict_line['partner_name'],
                     'reference'  : dict_line['ref'],
                     'input' : 0.0,

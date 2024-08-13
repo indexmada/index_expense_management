@@ -32,6 +32,7 @@
                             <tree editable="false" create="false" delete="false">
                                 <field name="date"/>
                                 <field name="label"/>
+                                <field name="payment_journal" widget="many2many_tags" options="{'no_create': True}"/>
                                 <field name="partner"/>
                                 <field name="reference"/>
                                 <field name="input"/>

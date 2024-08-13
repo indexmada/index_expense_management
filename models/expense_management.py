@@ -14,6 +14,7 @@ class JournalBoxAggregate(models.Model):
     input = fields.Float(string='Entrée')
     output = fields.Float(string='Sortie')
     balance = fields.Float(string='Solde')
+    payment_journal = fields.Many2many('account.journal', string='Journal paiement', domain="[('journal_user', '=', True), ('type', 'in', ('bank', 'cash'))]")
     journal_cashier_wizard_id = fields.Many2one('journal.cashier.wizard', string='Journal caisse')
 
 
@@ -24,6 +25,7 @@ class ExpenseJournal(models.Model):
     date = fields.Date("Date")
     amount = fields.Float("Montant")
     category_id = fields.Many2one("expense.category", string='Catégorie')
+    journal_id = fields.Many2one("account.journal", string='Journal')
     pos_session_id = fields.Many2one("pos.session", string='Session')
     expense_journal_id = fields.Many2one('expense.detail.wizard', string="Journal")
 
