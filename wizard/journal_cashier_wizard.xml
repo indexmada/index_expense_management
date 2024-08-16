@@ -29,7 +29,8 @@
                         </div>
                         <div class="oe_clear"/>
                         <field name="journal_box_aggregate_ids" nolabel="1">
-                            <tree editable="false" create="false" delete="false">
+                            <!-- <tree editable="false" create="false" delete="false"> -->
+                            <tree create="0" delete="0">
                                 <field name="date"/>
                                 <field name="label"/>
                                 <field name="payment_journal" widget="many2many_tags" options="{'no_create': True}"/>

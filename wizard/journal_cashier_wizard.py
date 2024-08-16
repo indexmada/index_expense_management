@@ -16,7 +16,7 @@ class JournalCashierWizard(models.Model):
     journal_reference = fields.Char(string='Référence du journal')
     initial_balance = fields.Monetary(digits=2, string='Solde initial')
     final_balance = fields.Monetary(dgits=2, string='Solde final')
-    journal_box_aggregate_ids = fields.One2many('journal.box.aggregate', 'journal_cashier_wizard_id', string='Lignes journal caisse')
+    journal_box_aggregate_ids = fields.One2many('journal.box.aggregate', 'journal_cashier_wizard_id', string='Lignes journal caisse', readonly=True)
 
     @api.multi
     def print_journal_cashier(self):
